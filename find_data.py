@@ -4,6 +4,7 @@ import requests
 import xmltodict
 from bs4 import BeautifulSoup
 import pickle
+from datetime import date
 
 rooturl = "https://www.gov.uk/search/all.atom?content_purpose_supergroup%5B%5D=research_and_statistics" \
           "&content_purpose_supergroup%5B%5D=policy_and_engagement&content_purpose_supergroup%5B%5D=transparency" \
@@ -50,6 +51,12 @@ for key, value in master_dict.items():
                     not link.startswith('mailto:'):
                 if link.startswith('/'):
                     link = "https://www.gov.uk" + link
+                # add in error catching for basically if the link
+                # doesn't work when we try to request, don't save.
+                try:
+                    requests.get(link)
+                except:
+                    continue
                 value['first_content_url'] = link
                 successful_content_count += 1
                 print(successful_content_count)
@@ -57,7 +64,11 @@ for key, value in master_dict.items():
     except AttributeError:
         print(value['url'])
 
+print(f"Successful content count: {successful_content_count} out of {len(master_dict)}")
 
-with open('master_dict.pkl', 'wb') as f:
+filename = f"master_dict_{date.today()}.pkl"
+print(filename)
+
+with open(filename, 'wb') as f:
     pickle.dump(master_dict, f)
 
