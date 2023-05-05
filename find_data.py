@@ -61,19 +61,3 @@ for key, value in master_dict.items():
 with open('master_dict.pkl', 'wb') as f:
     pickle.dump(master_dict, f)
 
-# with open('saved_dictionary.pkl', 'rb') as f:
-#     loaded_dict = pickle.load(f)
-
-# look at one data source that is an html format
-first_content_url = master_dict['4_16']['first_content_url']
-page = requests.get(first_content_url)
-parsed_html = BeautifulSoup(page.text, features="lxml")
-print(parsed_html.text)
-found = parsed_html.body.find('div', attrs={'class': 'main-content-container'})
-print(found.text)
-
-# look at one data source that is a pdf format
-first_content_url = master_dict['42_18']['first_content_url']
-page = requests.get(first_content_url)
-parsed_html = BeautifulSoup(page.text, features="lxml")
-
