@@ -1,0 +1,4 @@
+.idea/
+__pycache__/
+master_dict_2023-05-05.pkl
+top2vec_model
