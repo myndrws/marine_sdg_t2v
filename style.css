@@ -1,0 +1,31 @@
+
+html, body {
+    height: 100%;
+    margin: 0 auto;
+}
+
+#imported_plots {
+    display: flex;
+    justify-content: center;
+}
+
+#igraph {
+    border:none;
+    margin: 0 auto;
+    height:800px;
+    width:80%;
+}
+
+#tester {
+    border:none;
+    margin: 0 auto;
+    height:800px;
+    width:50%;
+}
+
+#my_dataviz {
+    border:none;
+    margin: 0 auto;
+    height:800px;
+    width:50%;
+}
