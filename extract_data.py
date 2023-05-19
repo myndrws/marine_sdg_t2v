@@ -34,6 +34,7 @@ class etl_data():
         print(f"Starting at {time.ctime()}")
 
         for source_id, entry in master_dict.items():
+            report_count += 1
             if 'first_content_url' not in entry:
                 print(f"Skipping entry {source_id} at loop {report_count} (no content url in master_dict).")
                 continue
@@ -41,9 +42,11 @@ class etl_data():
             self.source_id = source_id
             self.entry_url = entry['first_content_url']   # we assume all are pdfs or html urls
             self.full_text = self._extract_from_html_and_pdf()
+            if self.full_text is None:
+                continue  # add this for now just to get some data
             self.sent_token_full_text = self._sent_tokenize_docs()
             self._append_uids_sentences()
-            report_count += 1
+
 
         self._reset_self()
         print(f"Finished unpacking! Time is {time.ctime()}")
@@ -64,8 +67,10 @@ class etl_data():
             scan_result = parsed_html.body.find('div', attrs=attrs)
             if scan_result is not None and hasattr(scan_result, 'text'):
                 return parsed_html.body.find('div', attrs=attrs).text
-        raise ValueError(f"None of the searched attributes can locate html "
-                         f"body text content for document {self.source_id}")
+            else:
+                print(f"None of the searched attributes can locate html "
+                      f"body text content for document {self.source_id}")
+                return None
 
     def _extract_from_html_and_pdf(self):
         if self.entry_url.endswith((".PDF", ".pdf")):
@@ -103,18 +108,5 @@ if __name__ == '__main__':
     print(filename)
     with open(filename, 'wb') as f:
         pickle.dump(data, f)
-
-    # look at one data source that is an html format
-    # first_content_url = master_dict['4_6']['first_content_url']
-    # page = requests.get(first_content_url)
-    # parsed_html = BeautifulSoup(page.text, features="lxml")
-    # found = parsed_html.body.find('div', attrs={'class': 'main-content-container'})
-    #
-    # # look at one data source that is a pdf format
-    # first_content_url = master_dict['42_18']['first_content_url']
-    # response = requests.get(first_content_url)
-    # with io.BytesIO(response.content) as open_pdf_file:
-    #     reader = PdfReader(open_pdf_file)
-    #     all_pages = '. '.join((page.extract_text() for page in reader.pages))
 
 

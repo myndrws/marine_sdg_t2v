@@ -54,7 +54,9 @@ for key, value in master_dict.items():
                 # add in error catching for basically if the link
                 # doesn't work when we try to request, don't save.
                 try:
-                    requests.get(link)
+                    attempt = requests.get(link)
+                    if attempt.status_code != 200:
+                        continue
                 except:
                     continue
                 value['first_content_url'] = link
