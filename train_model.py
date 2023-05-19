@@ -2,6 +2,7 @@
 import pickle
 import numpy as np
 from top2vec import Top2Vec
+from extract_data import etl_data
 
 # get data
 filename = 'sentences_from_master_dict_2023-05-05.pkl'
@@ -9,7 +10,9 @@ with open(filename, 'rb') as f:
     sentences_object = pickle.load(f)
 
 # train and save model
-model = Top2Vec(sentences_object.sentences)
+model = Top2Vec(sentences_object.sentences,
+                min_count=20,
+                topic_merge_delta=0.3)
 model.save("top2vec_model")
 
 # investigate model
