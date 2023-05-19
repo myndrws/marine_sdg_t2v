@@ -2,4 +2,5 @@
 __pycache__/
 master_dict_2023-05-05.pkl
 sentences_from_master_dict_2023-05-05.pkl
+2d_umap_embeddings.pkl
 top2vec_model
