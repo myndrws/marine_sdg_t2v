@@ -7,7 +7,7 @@ model = Top2Vec.load("top2vec_model")
 # investigate model
 all_topic_sizes, all_topic_nums = model.get_topic_sizes()
 
-keywords = ["marine", "coastal", "seas", "oceans", "restore"]
+keywords = ["marine", "coastal", "seas", "oceans"]
 marine_topic_nums = []
 for kw in keywords:
     _, _, _, topic_nums = model.search_topics(keywords=[kw], num_topics=5)
