@@ -4,16 +4,16 @@ html, body {
     margin: 0 auto;
 }
 
-#imported_plots {
+.imported_plots {
     display: flex;
     justify-content: center;
 }
 
-#igraph {
+.igraph {
     border:none;
     margin: 0 auto;
-    height:800px;
-    width:80%;
+    height:1000px;
+    width:95%;
 }
 
 #tester {
